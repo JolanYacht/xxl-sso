@@ -107,7 +107,7 @@ mybatis.type-aliases-package=com.xxl.sso.server.model
 
 ### redis   （sessionid 分布式存储共享Redis）
 redis.address=127.0.0.1:6379
-
+redis.password=123456
 ```
 
 ### 2.4 部署 "单点登陆Client端接入示例项目"
@@ -142,7 +142,7 @@ public FilterRegistrationBean xxlSsoFilterRegistration() {
     registration.setName("XxlSsoFilter");
     registration.setOrder(1);
     registration.addUrlPatterns("/*");
-    registration.setFilter(new XxlSsoFilter());
+    registration.setFilter(new XxlSsoFilter());//相当于web.xml配置filter 指定了class
     registration.addInitParameter(Conf.SSO_SERVER, xxlSsoServer);
     registration.addInitParameter(Conf.SSO_LOGOUT_PATH, xxlSsoLogoutPath);
 
@@ -174,6 +174,7 @@ xxl.sso.server=http://xxlssoserver.com:8080/xxl-sso-server
 xxl.sso.logout.path=/logout
 ##### （sessionid 分布式存储共享Redis）
 xxl.sso.redis.address=127.0.0.1:6379
+xxl.sso.redis.password=123456
 ```
 
 ### 2.5 验证
@@ -212,7 +213,6 @@ xxl.sso.redis.address=127.0.0.1:6379
     正常情况下，注销流程如下：
     1、访问 "Client01应用地址" 配置的 "注销登陆path"，将会自动 redirect 到 "SSO认证中心地址" 并自动注销登陆状态；
     2、此时，访问 "Client02应用地址"，也将会自动注销登陆状态；
-
 
 
 ## 三、快速入门（基于Token）
